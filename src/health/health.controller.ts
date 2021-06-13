@@ -6,7 +6,7 @@ import {
   MemoryHealthIndicator,
 } from '@nestjs/terminus';
 
-import { EngineHealthIndicator } from 'src/engine/engine.health';
+import { EngineHealthIndicator } from '../engine/engine.health';
 
 @Controller('health')
 export class HealthController {
