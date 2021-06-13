@@ -329,5 +329,7 @@ $RECYCLE.BIN/
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,osx,node,yarn,visualstudiocode,sublimetext,vim,emacs
+
 # stryker temp files
 .stryker-tmp
+reports/*
