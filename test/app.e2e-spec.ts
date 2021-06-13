@@ -17,18 +17,15 @@ describe('HealthController (e2e)', () => {
     await app.init();
   });
 
-  it('/health (GET)', (done) => {
+  it('/health (GET)', () => {
     return request(app.getHttpServer())
       .get('/health')
-      .expect(({ body }) => {
-        expect(body.status).toBeDefined()
-        expect(body.details).toBeDefined()
-        expect(body.details.engine).toBeDefined()
-        expect(body.details.memory_heap).toBeDefined()
-        expect(body.details.memory_rss).toBeDefined()
-        expect(body.details.disk).toBeDefined()
-      })
-      .end(done);
+      .expect(({ body }) => expect(body.status).toBeDefined())
+      .expect(({ body }) => expect(body.details).toBeDefined())
+      .expect(({ body }) => expect(body.details.engine).toBeDefined())
+      .expect(({ body }) => expect(body.details.memory_heap).toBeDefined())
+      .expect(({ body }) => expect(body.details.memory_rss).toBeDefined())
+      .expect(({ body }) => expect(body.details.disk).toBeDefined());
   });
 
   afterAll(async () => {
