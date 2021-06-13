@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/yifan-ca/tournament-manager/compare/v0.0.1...v0.1.0) (2021-06-13)
+
+
+### Features
+
+* adds dockerfile to build mutistage player ([64db5df](https://github.com/yifan-ca/tournament-manager/commit/64db5df2504e52d512f63991da01acffa8d18d2c))
+
 ### 0.0.1 (2021-06-13)
 
 
