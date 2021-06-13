@@ -22,10 +22,13 @@ export class HealthController {
   check() {
     return this.health.check([
       async () => this.engine.checkReady('engine'),
-      async () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
-      async () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
+      // The process should not use more than 100MB memory
+      async () => this.memory.checkHeap('memory_heap', 100 * 1024 * 1024),
+      // The process should not have more than 300MB allocated
+      async () => this.memory.checkRSS('memory_rss', 300 * 1024 * 1024),
+      // The used disk storage should not exceed 70% of the full disk size
       async () =>
-        this.disk.checkStorage('disk', { thresholdPercent: 0.75, path: '/' }),
+        this.disk.checkStorage('disk', { thresholdPercent: 0.7, path: '/' }),
     ]);
   }
 }

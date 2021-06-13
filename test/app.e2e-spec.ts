@@ -25,7 +25,7 @@ describe('HealthController (e2e)', () => {
       .expect(({ body }) => expect(body.details.engine).toBeDefined())
       .expect(({ body }) => expect(body.details.memory_heap).toBeDefined())
       .expect(({ body }) => expect(body.details.memory_rss).toBeDefined())
-      .expect(({ body }) => expect(body.details.disk).toBeDefined())
+      .expect(({ body }) => expect(body.details.disk).toBeDefined());
   });
 
   afterAll(async () => {

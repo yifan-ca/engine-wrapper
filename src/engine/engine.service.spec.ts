@@ -2,7 +2,6 @@ import { Engine, EngineChain } from 'node-uci';
 
 import { EngineService } from './engine.service';
 import { Test } from '@nestjs/testing';
-import { throws } from 'assert';
 
 describe('EngineService', () => {
   let engineService: EngineService;
@@ -92,19 +91,17 @@ describe('EngineService', () => {
       // arrange
       jest.spyOn(engine, 'isready').mockResolvedValueOnce(engine);
       // act
-      const actual = expect(
-        engineService.ready(),
-      );
+      const actual = expect(engineService.ready());
       // assert
       return actual.resolves.toEqual(engine);
     });
     it('should raise an error if engine is not ready', () => {
       // arrange
-      jest.spyOn(engine, 'isready').mockRejectedValueOnce(new Error('engine error'));
+      jest
+        .spyOn(engine, 'isready')
+        .mockRejectedValueOnce(new Error('engine error'));
       // act
-      const actual = expect(
-        engineService.ready(),
-      );
+      const actual = expect(engineService.ready());
       // assert
       return actual.rejects.toThrowError(new Error('engine error'));
     });

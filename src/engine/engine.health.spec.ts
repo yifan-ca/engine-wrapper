@@ -1,5 +1,6 @@
 import { EngineHealthIndicator } from './engine.health';
 import { EngineService } from './engine.service';
+import { HealthCheckError } from '@nestjs/terminus';
 import { Test } from '@nestjs/testing';
 
 describe('EngineHealthIndicator', () => {
@@ -47,7 +48,9 @@ describe('EngineHealthIndicator', () => {
       const actual = expect(engineHealthIndicator.checkReady('engine'));
       // assert
       expect(engineServiceSpy).toBeCalled();
-      return actual.rejects.toThrowError(new Error('service error'));
+      return actual.rejects.toThrowError(
+        new HealthCheckError('service error', { engine: { status: 'down' } }),
+      );
     });
   });
 });
