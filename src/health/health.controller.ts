@@ -6,7 +6,7 @@ import {
   MemoryHealthIndicator,
 } from '@nestjs/terminus';
 
-import { EngineHealthIndicator } from 'src/engine/engine.health';
+import { EngineHealthIndicator } from '../engine/engine.health';
 
 @Controller('health')
 export class HealthController {
@@ -21,7 +21,7 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.health.check([
-      async () => this.engine.ping('engine'),
+      async () => this.engine.checkReady('engine'),
       async () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
       async () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
       async () =>
