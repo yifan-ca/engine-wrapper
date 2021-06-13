@@ -1,11 +1,19 @@
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EnginesModule } from './engines/engines.module';
+import { ConfigModule } from '@nestjs/config';
+import { EngineModule } from './engine/engine.module';
 import { HealthModule } from './health/health.module';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [EnginesModule, HealthModule],
+  imports: [
+    EngineModule,
+    HealthModule,
+    ConfigModule.forRoot({
+      envFilePath: '.dev.env',
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
