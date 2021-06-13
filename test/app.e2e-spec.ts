@@ -5,10 +5,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
 
-describe('AppController (e2e)', () => {
+describe('HealthController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -17,12 +17,21 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/health (GET)', (done) => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .get('/health')
+      .expect(({ body }) => {
+        expect(body.status).toBeDefined()
+        expect(body.details).toBeDefined()
+        expect(body.details.engine).toBeDefined()
+        expect(body.details.memory_heap).toBeDefined()
+        expect(body.details.memory_rss).toBeDefined()
+        expect(body.details.disk).toBeDefined()
+      })
+      .end(done);
   });
 
-  afterEach(() => app.close());
+  afterAll(async () => {
+    await app.close();
+  });
 });
