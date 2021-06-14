@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/yifan-ca/tournament-manager/compare/v0.1.0...v0.2.0) (2021-06-14)
+
+
+### Features
+
+* adds decorator to enable dynamic subject ([b59aef8](https://github.com/yifan-ca/tournament-manager/commit/b59aef81d1866cc3c019eae5178be44eba47426a))
+* adds sample using komodo and stockfish engines ([7903986](https://github.com/yifan-ca/tournament-manager/commit/79039868d5a5b37b6273ecdf45b3485e9ef96324))
+
+
+### Bug Fixes
+
+* use dynamic subject in message pattern decorator ([86b6d8c](https://github.com/yifan-ca/tournament-manager/commit/86b6d8c831b56f820b2b058cb213d0de4bb65a3d))
+
 ## [0.1.0](https://github.com/yifan-ca/tournament-manager/compare/v0.0.1...v0.1.0) (2021-06-13)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "engine-wrapper",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Engine shell to handle communication with Yifan Chess Arena.",
   "private": true,
   "repository": "https://github.com/yifan-ca/tournament-manager.git",
