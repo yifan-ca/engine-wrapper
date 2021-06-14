@@ -1,5 +1,5 @@
 export interface MoveRequestDto {
-    position: string;
-    movetime: number;
-    moves: string[];
+  position: string;
+  movetime: number;
+  moves: string[];
 }

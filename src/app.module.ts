@@ -5,6 +5,7 @@ import * as path from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module, OnApplicationBootstrap } from '@nestjs/common';
 
+import { DynamicPatternService } from './decorators/dynamic-pattern.service';
 import { EngineModule } from './engine/engine.module';
 import { HealthModule } from './health/health.module';
 
@@ -17,6 +18,7 @@ import { HealthModule } from './health/health.module';
       isGlobal: true,
     }),
   ],
+  providers: [DynamicPatternService],
 })
 export class AppModule implements OnApplicationBootstrap {
   constructor(private readonly config: ConfigService) {}
@@ -24,8 +26,13 @@ export class AppModule implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     const filename = path.join(__dirname, '..', 'static', 'mtod.txt');
     const content = fs.readFileSync(filename, 'utf-8');
-    process.stdout.write(
-      mustache.render(content, { enginePath: this.config.get('ENGINE_PATH') }),
+    console.log(
+      mustache.render(content, {
+        engine: this.config.get('ENGINE_PATH'),
+        subject: this.config.get('NATS_SUBJECT'),
+        version: process.env.npm_package_version,
+        license: process.env.npm_package_license,
+      }),
     );
   }
 }
