@@ -18,7 +18,6 @@ import { EngineService } from './service/engine.service';
         await engine.isready();
         return engine;
       },
-      scope: Scope.REQUEST,
     },
     EngineHealthIndicator,
     EngineService,
