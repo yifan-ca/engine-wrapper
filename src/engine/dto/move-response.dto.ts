@@ -1,3 +1,3 @@
-export interface MoveResponseDto {
+export class MoveResponseDto {
   bestmove: string;
 }
