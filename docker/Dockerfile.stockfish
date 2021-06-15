@@ -9,7 +9,7 @@ ADD https://github.com/official-stockfish/Stockfish/archive/sf_13.tar.gz /app
 RUN tar xvzf *.tar.gz && cd Stockfish-sf_13/src \
     && make net && make build ARCH=x86-64-modern
 
-FROM docker.io/crissilvaeng/yifan-engine:0.1.0
+FROM docker.io/crissilvaeng/yifan-engine:0.2.0
 
 COPY --from=0 /app/Stockfish-sf_13/src/stockfish /usr/bin/stockfish
 
@@ -17,4 +17,6 @@ WORKDIR /app
 
 ENV ENGINE_PATH /usr/bin/stockfish
 
-CMD [ "yarn", "start" ]
+RUN yarn build
+
+CMD [ "yarn", "start:prod" ]
