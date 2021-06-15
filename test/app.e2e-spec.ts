@@ -17,8 +17,8 @@ describe('HealthController (e2e)', () => {
     await app.init();
   });
 
-  it('/health (GET)', (done) => {
-    request(app.getHttpServer()).get('/health').expect(200).end(done);
+  it('/health (GET)', () => {
+    return request(app.getHttpServer()).get('/health').expect(200);
   });
 
   afterAll(async () => {
