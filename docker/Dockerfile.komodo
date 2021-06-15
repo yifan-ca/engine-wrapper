@@ -8,7 +8,7 @@ RUN apt-get update \
 ADD https://komodochess.com/pub/komodo-12.zip /app
 RUN unzip komodo-12.zip
 
-FROM docker.io/crissilvaeng/yifan-engine:0.2.0
+FROM docker.io/crissilvaeng/yifan-engine:0.3.0
 
 COPY --from=0 /app/komodo-12.*/Linux/komodo-*-linux /usr/bin/komodo
 
