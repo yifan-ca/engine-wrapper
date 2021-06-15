@@ -23,12 +23,12 @@ export class EngineController {
     @Payload() data: MoveRequestDto,
     @Ctx() context: NatsContext,
   ): Promise<MoveResponseDto> {
-    this.logger.debug(
+    this.logger.log(
       `Input: ${JSON.stringify(data)}`,
       JSON.stringify(context),
     );
     const result = await this.service.move({ ...data });
-    this.logger.debug(
+    this.logger.log(
       `Output: ${JSON.stringify(result)}`,
       JSON.stringify(context),
     );

@@ -8,7 +8,7 @@ RUN apt-get update \
 ADD https://komodochess.com/pub/komodo-12.zip /app
 RUN unzip komodo-12.zip
 
-FROM docker.io/crissilvaeng/yifan-engine:0.1.0
+FROM docker.io/crissilvaeng/yifan-engine:0.3.0
 
 COPY --from=0 /app/komodo-12.*/Linux/komodo-*-linux /usr/bin/komodo
 
@@ -16,4 +16,6 @@ WORKDIR /app
 
 ENV ENGINE_PATH /usr/bin/komodo
 
-CMD [ "yarn", "start" ]
+RUN yarn build
+
+CMD [ "yarn", "start:prod" ]

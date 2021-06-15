@@ -40,6 +40,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   await app.startAllMicroservicesAsync();
-  await app.listen(process.env.PORT);
+  await app.listen(0);
 }
 bootstrap();
