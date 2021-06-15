@@ -79,5 +79,5 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: yarn --frozen-lockfile
-      - run: docker compose run web yarn test:e2e
+      - run: docker-compose run web yarn test:e2e
 
