@@ -1,9 +1,10 @@
-import { BeforeApplicationShutdown, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Module, Scope } from '@nestjs/common';
 
 import { Engine } from 'node-uci';
-import { EngineHealthIndicator } from './engine.health';
-import { EngineService } from './engine.service';
+import { EngineController } from './engine.controller';
+import { EngineHealthIndicator } from './health/engine.health';
+import { EngineService } from './service/engine.service';
 
 @Module({
   imports: [ConfigModule],
@@ -17,16 +18,12 @@ import { EngineService } from './engine.service';
         await engine.isready();
         return engine;
       },
+      scope: Scope.REQUEST,
     },
     EngineHealthIndicator,
     EngineService,
   ],
+  controllers: [EngineController],
   exports: [EngineHealthIndicator, EngineService],
 })
-export class EngineModule implements BeforeApplicationShutdown {
-  constructor(private readonly engine: Engine) {}
-
-  async beforeApplicationShutdown() {
-    await this.engine.quit();
-  }
-}
+export class EngineModule {}

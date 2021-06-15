@@ -4,7 +4,7 @@ import {
   HealthIndicatorResult,
 } from '@nestjs/terminus';
 
-import { EngineService } from './engine.service';
+import { EngineService } from '../service/engine.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

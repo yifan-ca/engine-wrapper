@@ -1,5 +1,5 @@
 import { EngineHealthIndicator } from './engine.health';
-import { EngineService } from './engine.service';
+import { EngineService } from '../service/engine.service';
 import { HealthCheckError } from '@nestjs/terminus';
 import { Test } from '@nestjs/testing';
 

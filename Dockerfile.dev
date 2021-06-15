@@ -1,0 +1,22 @@
+FROM node:14-buster
+
+WORKDIR /app
+
+ADD https://github.com/official-stockfish/Stockfish/archive/sf_13.tar.gz /app
+RUN tar xvzf *.tar.gz && cd Stockfish-sf_13/src \
+    && make net && make build ARCH=x86-64-modern
+
+FROM node:14-buster-slim
+
+COPY --from=0 /app/Stockfish-sf_13/src/stockfish /usr/bin/stockfish
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN yarn --frozen-lockfile
+
+COPY . .
+
+ENV PORT 3000
+
+CMD [ "yarn", "start" ]
