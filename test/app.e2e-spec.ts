@@ -39,9 +39,10 @@ describe('HealthController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/engine')
       .send({
-        position: 'r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1',
+        position:
+          'r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1',
         movetime: 500,
-        moves: ["e2e4", "e7e5", "d4h5", "b8c6", "f1c4", "g8f6", "h5f7"],
+        moves: ['e2e4', 'e7e5', 'd4h5', 'b8c6', 'f1c4', 'g8f6', 'h5f7'],
       })
       .expect(500);
   });
