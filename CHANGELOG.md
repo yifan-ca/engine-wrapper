@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/yifan-ca/tournament-manager/compare/v0.2.0...v1.0.0) (2021-06-18)
+
+
+### Features
+
+* adds swagger+endpoit to call engine ([fa866e5](https://github.com/yifan-ca/tournament-manager/commit/fa866e5063c68e2d3a47ddbfa5c239f6b70a513f))
+
+
+### Bug Fixes
+
+* test e2e linter ([6ca6862](https://github.com/yifan-ca/tournament-manager/commit/6ca6862d8ae49b15f5bee3fc937b32858dabb56d))
+* use old docker-compose syntax command ([cde985f](https://github.com/yifan-ca/tournament-manager/commit/cde985f97ea0d42f6be2d71d129882a4a1a91f0b))
+
 ## [0.2.0](https://github.com/yifan-ca/tournament-manager/compare/v0.1.0...v0.2.0) (2021-06-14)
 
 
