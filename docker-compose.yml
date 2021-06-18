@@ -1,21 +1,6 @@
-version: "3.8"
-
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: "yarn start:debug"
-    environment:
-      ENGINE_PATH: /usr/bin/stockfish
-      NATS_SUBJECT: games.*.stockfish-13
-      NATS_URL: nats://nats:4222
-    env_file: .dev.env
-    depends_on:
-      - nats
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
     ports:
-      - 5000:5000
-    volumes:
-      - .:/app
-  nats:
-    image: nats:alpine
+      - 5672:5672
+      - 15672:15672

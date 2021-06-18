@@ -1,38 +1,27 @@
-import * as fs from 'fs';
-import * as mustache from 'mustache';
-import * as path from 'path';
+import { Engine, EngineChain } from 'node-uci';
 
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Module, OnApplicationBootstrap } from '@nestjs/common';
-
-import { DynamicPatternService } from './decorators/dynamic-pattern.service';
-import { EngineModule } from './engine/engine.module';
-import { HealthModule } from './health/health.module';
+import { EngineService } from './engine.service';
+import { Module } from '@nestjs/common';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
   imports: [
-    EngineModule,
-    HealthModule,
-    ConfigModule.forRoot({
-      envFilePath: '.dev.env',
-      isGlobal: true,
+    RabbitMQModule.forRoot(RabbitMQModule, {
+      uri: process.env.RABBITMQ_URL,
+      connectionInitOptions: { wait: false },
     }),
   ],
-  providers: [DynamicPatternService],
+  providers: [
+    {
+      provide: EngineChain,
+      useFactory: async () =>
+        new Engine(process.env.ENGINE_PATH)
+          .chain()
+          .init()
+          .isready()
+          .ucinewgame(),
+    },
+    EngineService,
+  ],
 })
-export class AppModule implements OnApplicationBootstrap {
-  constructor(private readonly config: ConfigService) {}
-
-  async onApplicationBootstrap() {
-    const filename = path.join(__dirname, '..', 'static', 'mtod.txt');
-    const content = fs.readFileSync(filename, 'utf-8');
-    console.log(
-      mustache.render(content, {
-        engine: this.config.get('ENGINE_PATH'),
-        subject: this.config.get('NATS_SUBJECT'),
-        version: process.env.npm_package_version,
-        license: process.env.npm_package_license,
-      }),
-    );
-  }
-}
+export class AppModule {}

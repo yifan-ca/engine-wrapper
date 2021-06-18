@@ -1,45 +1,25 @@
-import * as compression from 'compression';
-import * as helmet from 'helmet';
-
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import * as fs from 'fs';
+import * as mustache from 'mustache';
+import * as path from 'path';
 
 import { AppModule } from './app.module';
-import { DynamicPatternService } from './decorators/dynamic-pattern.service';
-import { EngineController } from './engine/engine.controller';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const filename = path.join(__dirname, '..', 'static', 'mtod.txt');
+  const content = fs.readFileSync(filename, 'utf-8');
+  console.log(
+    mustache.render(content, {
+      engine: process.env.ENGINE_PATH,
+      exchange: process.env.EXCHANGE_NAME,
+      routing: process.env.ROUTING_KEY,
+      queue: process.env.QUEUE_NAME,
+      version: process.env.npm_package_version,
+      license: process.env.npm_package_license,
+    }),
+  );
 
-  app.get(DynamicPatternService).processDecorators([EngineController]);
-
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.NATS,
-    options: {
-      url: process.env.NATS_URL,
-    },
-  });
-
-  app.use(compression());
-  app.use(helmet());
-
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.setGlobalPrefix('api');
-
-  const config = new DocumentBuilder()
-    .setTitle(process.env.npm_package_name)
-    .setDescription(
-      `${process.env.npm_package_description} (rev: ${process.env.GIT_REV})`,
-    )
-    .setVersion(process.env.npm_package_version)
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
-
-  await app.startAllMicroservicesAsync();
-  await app.listen(process.env.PORT);
+  const app = await NestFactory.create(AppModule);
+  await app.listen(0);
 }
 bootstrap();
