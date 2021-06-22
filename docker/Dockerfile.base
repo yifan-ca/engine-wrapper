@@ -1,8 +1,23 @@
 FROM node:14-buster-slim
 
-WORKDIR /app
+WORKDIR /root
 
 COPY package*.json ./
+
 RUN yarn --frozen-lockfile
 
 COPY . .
+
+RUN yarn build
+
+FROM node:14-buster-slim
+
+ENV NODE_ENV production
+
+COPY --from=0 /root/package*.json /root
+COPY --from=0 /root/dist /root/dist
+COPY --from=0 /root/static /root/static
+
+WORKDIR /root
+
+RUN yarn --frozen-lockfile

@@ -1,19 +1,19 @@
 FROM debian:buster
 
-WORKDIR /app
+WORKDIR /root
 
 RUN apt-get update \
     && apt-get install unzip -y
 
-ADD https://komodochess.com/pub/komodo-12.zip /app
+ADD https://komodochess.com/pub/komodo-12.zip /root
 RUN unzip komodo-12.zip
 
-FROM docker.io/crissilvaeng/yifan-engine:0.1.0
+FROM crissilvaeng/chess-arena-engine:latest
 
-COPY --from=0 /app/komodo-12.*/Linux/komodo-*-linux /usr/bin/komodo
-
-WORKDIR /app
+COPY --from=0 /root/komodo-12.*/Linux/komodo-*-linux /usr/bin/komodo
 
 ENV ENGINE_PATH /usr/bin/komodo
 
-CMD [ "yarn", "start" ]
+WORKDIR /root
+
+CMD ["yarn", "start:prod"]

@@ -1,5 +1,6 @@
-import { EngineChain } from 'node-uci';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+
+import { Engine } from 'node-uci';
 import { RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 
 export interface MoveCommand {
@@ -10,7 +11,9 @@ export interface MoveCommand {
 
 @Injectable()
 export class EngineService {
-  constructor(private readonly engine: EngineChain) {}
+  private readonly logger = new Logger(EngineService.name);
+
+  constructor(private readonly engine: Engine) {}
 
   @RabbitRPC({
     exchange: process.env.EXCHANGE_NAME,
@@ -18,8 +21,11 @@ export class EngineService {
     queue: process.env.QUEUE_NAME,
   })
   async move(command: MoveCommand) {
-    return await this.engine
+    const result = await this.engine
+      .chain()
       .position(command.position, command.moves)
       .go({ movetime: command.movetime });
+    this.logger.log(JSON.stringify(result.bestmove), JSON.stringify(command));
+    return result;
   }
 }

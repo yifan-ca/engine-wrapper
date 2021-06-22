@@ -1,5 +1,4 @@
-import { Engine, EngineChain } from 'node-uci';
-
+import { Engine } from 'node-uci';
 import { EngineService } from './engine.service';
 import { Module } from '@nestjs/common';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
@@ -13,13 +12,14 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
   ],
   providers: [
     {
-      provide: EngineChain,
-      useFactory: async () =>
-        new Engine(process.env.ENGINE_PATH)
-          .chain()
-          .init()
-          .isready()
-          .ucinewgame(),
+      provide: Engine,
+      useFactory: async () => {
+        const engine = new Engine(process.env.ENGINE_PATH);
+        await engine.init();
+        await engine.isready();
+        await engine.ucinewgame();
+        return engine;
+      },
     },
     EngineService,
   ],
